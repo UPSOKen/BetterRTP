@@ -7,7 +7,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import io.papermc.lib.PaperLib;
 import me.SuperRonanCraft.BetterRTP.BetterRTP;
 import me.SuperRonanCraft.BetterRTP.player.rtp.effects.RTPEffect_Titles;
 import me.SuperRonanCraft.BetterRTP.player.rtp.effects.RTPEffects;
@@ -17,6 +16,7 @@ import me.SuperRonanCraft.BetterRTP.references.customEvents.RTP_TeleportPostEven
 import me.SuperRonanCraft.BetterRTP.references.customEvents.RTP_TeleportPreEvent;
 import me.SuperRonanCraft.BetterRTP.references.messages.MessagesCore;
 import me.SuperRonanCraft.BetterRTP.references.rtpinfo.worlds.WorldPlayer;
+import me.SuperRonanCraft.BetterRTP.versions.PaperAsync;
 
 //---
 //Credit to @PaperMC for PaperLib - https://github.com/PaperMC/PaperLib
@@ -52,7 +52,7 @@ public class RTPTeleport {
             RTP_TeleportEvent event = new RTP_TeleportEvent(p, location, wPlayer.getWorldtype());
             getPl().getServer().getPluginManager().callEvent(event);
             Location loc = event.getLocation();
-            PaperLib.teleportAsync(p, loc).thenRun(new BukkitRunnable() { //Async teleport
+            PaperAsync.teleportAsync(p, loc).thenRun(new BukkitRunnable() { //Async teleport
                 @Override
                 public void run() {
                     afterTeleport(p, loc, wPlayer, attempts, oldLoc, type);
@@ -142,7 +142,7 @@ public class RTPTeleport {
         for (int x = -range; x <= range; x++)
             for (int z = -range; z <= range; z++) {
                 Location locLoad = new Location(loc.getWorld(), loc.getX() + (x * 16), loc.getY(), loc.getZ() + (z * 16));
-                CompletableFuture<Chunk> chunk = PaperLib.getChunkAtAsync(locLoad, true);
+                CompletableFuture<Chunk> chunk = PaperAsync.getChunkAtAsync(locLoad, true);
                 asyncChunks.add(chunk);
             }
         return asyncChunks;

@@ -1,3 +1,8 @@
+> [!NOTE]
+> This fork adds a small compatibility shim for Paper-based forks such as UniverseSpigot. BetterRTP still falls back to PaperLib when native async APIs are unavailable, but it now first detects and invokes `World#getChunkAtAsync(...)` and `Entity#teleportAsync(...)` directly by reflection. This avoids PaperLib 1.0.8 missing async support on newer or custom Paper-derived servers because of version/platform detection quirks.
+>
+> The fork also updates the local Maven build to run Lombok explicitly on newer JDKs.
+
 <p align="center">
   <b><a>Welcome to BetterRTP's repository!</a></b>
 </p>
